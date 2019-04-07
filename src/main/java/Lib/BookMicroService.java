@@ -40,7 +40,8 @@ public class BookMicroService {
 			method=RequestMethod.POST,
 			produces=MediaType.APPLICATION_JSON_VALUE,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Book createBook (@RequestBody Book book){
+	public Book createBook (@RequestBody Book book) throws UndifineBookException{
+		
 		return bookService.CreateBook(book);
 		//this.bookArry.add(book);
 		//return book;
