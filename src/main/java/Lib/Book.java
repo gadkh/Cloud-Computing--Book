@@ -8,20 +8,20 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Books")
+@Table(name = "Books")
 public class Book {
 	private String ISBN;
 	private String title;
 	private String[] authors;
-	private String publisher;
+	private Publisher publisher;
 	private int publishedYear;
 	private int rating;
-	
+
 	public Book() {
 		super();
-		}
+	}
 
-	public Book(String iSBN, String title, String[] authors, String publisher, int publishedYear, int rating) {
+	public Book(String iSBN, String title, String[] authors, Publisher publisher, int publishedYear, int rating) {
 		super();
 		ISBN = iSBN;
 		this.title = title;
@@ -55,17 +55,18 @@ public class Book {
 	public void setAuthors(String[] authors) {
 		this.authors = authors;
 	}
-	
+
 	public int getPublishedYear() {
 		return publishedYear;
 	}
-	
-	
-	public String getPublisher() {
+	@OneToOne(
+			fetch=FetchType.EAGER
+			)
+	public Publisher getPublisher() {
 		return publisher;
 	}
 
-	public void setPublisher(String publisher) {
+	public void setPublisher(Publisher publisher) {
 		this.publisher = publisher;
 	}
 
@@ -80,6 +81,5 @@ public class Book {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-	
-	
+
 }
