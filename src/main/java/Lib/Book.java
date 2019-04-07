@@ -1,11 +1,14 @@
 package Lib;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Book")
+@Table(name="Books")
 public class Book {
 	private String ISBN;
 	private String title;
@@ -52,7 +55,12 @@ public class Book {
 	public void setAuthors(String[] authors) {
 		this.authors = authors;
 	}
-
+	
+	public int getPublishedYear() {
+		return publishedYear;
+	}
+	
+	
 	public String getPublisher() {
 		return publisher;
 	}
@@ -61,11 +69,6 @@ public class Book {
 		this.publisher = publisher;
 	}
 
-	public int getPublishedYear() {
-		return publishedYear;
-	}
-	
-	
 	public void setPublishedYear(int publishedYear) {
 		this.publishedYear = publishedYear;
 	}

@@ -3,6 +3,7 @@ package Lib;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +23,13 @@ public class BookMicroService {
 	private  final String ISBN="isbn";
 	private  final String TITLE="title";
 	private ArrayList<Book>bookArry;
+	private BookLogic bookService;
+	
+	@Autowired
+	public void init(BookLogic bookService)
+	{
+		this.bookService=bookService;
+	}
 	
 	public BookMicroService() {
 		this.bookArry=new ArrayList<>();
@@ -33,8 +41,9 @@ public class BookMicroService {
 			produces=MediaType.APPLICATION_JSON_VALUE,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	public Book createBook (@RequestBody Book book){
-		this.bookArry.add(book);
-		return book;
+		return bookService.CreateBook(book);
+		//this.bookArry.add(book);
+		//return book;
 	}
 	
 	
@@ -43,31 +52,16 @@ public class BookMicroService {
 			method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public Book getSpecificBook(@PathVariable("isbn") String isbn) throws UndifineBookException {
-		boolean found=false;
-		Book b = null;
-		for(int i=0;i<this.bookArry.size() &&found==false;i++)
-		{
-			b=this.bookArry.get(i);
-			if(isbn.equals(b.getISBN()))
-			{
-				found=true;
-			}
-		}
-		if(found==true)
-		{
-			return b;
-		}
-		else
-		{
-			throw new UndifineBookException("Illigale ISBN");
-		}
+		return this.bookService.getBookByISBN(isbn)
+				.orElseThrow(()->new RuntimeException("book not found by isbn: " + isbn));
 	}
 	
 	@RequestMapping(
 			path="/books",
 			method=RequestMethod.DELETE)
 		public void delete ()  {
-			this.bookArry.clear();
+		this.bookService.removeAllBooks();
+			//this.bookArry.clear();
 		}
 	
 	@RequestMapping(
