@@ -2,8 +2,8 @@
 <projectDescription>
 	<name>Cloud-Computing--Book</name>
 	<comment></comment>
-	<projects>
-	</projects>
+	<name>GrardleDB</name>
+	<comment>Project GrardleDB created by Buildship.</comment>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
@@ -13,5 +13,14 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<buildCommand>
+			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 	</natures>
 </projectDescription>
