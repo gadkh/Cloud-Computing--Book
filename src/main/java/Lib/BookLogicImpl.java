@@ -1,9 +1,13 @@
 package Lib;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Sort.Direction;
+
 
 @Service
 public class BookLogicImpl implements BookLogic {
@@ -38,6 +42,20 @@ public class BookLogicImpl implements BookLogic {
 	@Transactional
 	public void removeAllBooks() {
 		this.bookDao.deleteAll();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Book> getAllBooks(int page, int size) {
+		return
+		this.bookDao
+		.findAll(
+			PageRequest.of(
+					page, 
+					size, 
+					Direction.ASC, 
+					"ISBN"))
+		.getContent();
 	}
 
 }

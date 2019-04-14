@@ -1,6 +1,7 @@
 package Lib;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,14 +71,18 @@ public class BookMicroService {
 			method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 		public Object[] getAllBooks(
-				@RequestParam(name="content", required=false, defaultValue=DETAILED) String content) throws UndifineBookException {
+				@RequestParam(name="content", required=false, defaultValue=DETAILED) String content,
+				@RequestParam(name="page", required=false, defaultValue="0") int page, 
+				@RequestParam(name="size", required=false, defaultValue="10") int size)throws UndifineBookException {
+			List<Book>booklList=this.bookService.getAllBooks(page, size);
 			if(content.equals(DETAILED))
 			{
-				return (Book[]) bookArry.toArray(new Book[bookArry.size()]);
+				return booklList
+						.toArray(new Book[0]);
 			}
 			else if(content.equals(ISBN)) 
 			{
-				return bookArry
+				return booklList
 			    .stream()
 			    .map(book->book.getISBN())
 			    .collect(Collectors.toList())
@@ -85,7 +90,7 @@ public class BookMicroService {
 			}
 			else if(content.equals(TITLE))
 			{
-				return bookArry
+				return booklList
 					    .stream()
 					    .map(book->book.getTitle())
 					    .collect(Collectors.toList())

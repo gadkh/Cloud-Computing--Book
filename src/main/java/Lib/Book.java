@@ -3,8 +3,7 @@ package Lib;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -59,9 +58,8 @@ public class Book {
 	public int getPublishedYear() {
 		return publishedYear;
 	}
-	@OneToOne(
-			fetch=FetchType.EAGER
-			)
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	public Publisher getPublisher() {
 		return publisher;
 	}
